@@ -1,0 +1,23 @@
+.RegularButton-button-166 svg {
+    width: 47px !important;
+    height: 38px !important;
+}
+.Header-appBar-128 {
+    background-color: rgba(0, 172, 193, 0.8) !important;
+}
+.Header-appBar-128 {
+    color: #fff !important;
+}
+
+@media (max-width: 959.95px) {
+    .HeaderLinks-pooperNav-156 {
+        position: relative !important;
+    }
+    .makeStyles-popperNav-76 {
+        top: unset !important;
+        left: unset !important;
+        position: static !important;
+        transform: none !important;
+        will-change: unset !important;
+    }
+}

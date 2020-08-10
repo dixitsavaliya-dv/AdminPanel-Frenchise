@@ -1,0 +1,141 @@
+.main-div .login-form {
+	display: flex;
+	position: absolute;
+	width: 700px;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	border-radius: 4px;
+	align-items: center;
+	background: #407aff;
+}
+.main-div {
+	background: url(../../assets/img/bg-img1.jpg) no-repeat;
+	position: relative;
+	width: 100%;
+	background-size: cover;
+    height: 100vh;
+
+}
+.main-div::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: #000;
+    opacity: 0.7;
+}
+.main-div .right-box h1 {
+	font-size: 25px;
+	margin-bottom: 32px;
+	font-weight: 600;
+	color: #fff;
+}
+.main-div .form-check-input {
+	margin-left: 2px;
+	margin-top: 6px;
+}
+.main-div span {
+	margin-left: 22px;
+	color: #fff;
+}
+.main-div button {
+	background: #fff;
+	border: none;
+	width: 100%;
+	padding: 9px;
+	text-transform: uppercase;
+	border-radius: 4px;
+}
+.main-div .input-box {
+	width: 100%;
+	height: 40px;
+	border-radius: 4px;
+	border: 1px solid #e1e1e1;
+	text-indent: 14px;
+}
+.main-div .left-box {
+	width: 50%;
+}
+.main-div .left-box img{
+	max-width: 100%;
+}
+.main-div .right-box {
+	width: 50%;
+	padding: 30px;
+	background: #407aff;
+}
+.main-div .for-pass {
+	color: #fff;
+	margin-top: -10px;
+	display: block;
+	margin-bottom: 25px;
+}
+.p-box {
+	text-align: center;
+}
+.p-box h3 {
+	font-size: 25px;
+	font-weight: 600;
+}
+.p-box p {
+	font-size: 16px;
+	color: #555;
+}
+.p-box .input-box {
+	max-width: 320px;
+	height: 40px;
+	border-radius: 4px;
+	border: 1px solid #c4c4c4;
+	text-indent: 12px;
+	width: 100%;
+}
+.p-box .btn-re-pass {
+	background: #407aff;
+	color: #fff;
+	text-transform: uppercase;
+	padding: 9px 35px;
+	border: none;
+	border-radius: 4px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.right-inner-addon {
+    position: relative;
+}
+.right-inner-addon input {
+    padding-right: 35px !important;
+}
+.right-inner-addon i {
+    position: absolute;
+    right: 0px;
+    padding: 12px 12px;
+}
+
+@media screen and (max-width: 768px) {
+	.main-div .login-form {
+		display: block;
+		width: 90%;
+		margin-top: 60px;
+		margin-bottom: 60px;
+		left: unset;
+		top: unset;
+		transform: unset;
+		margin-left: auto;
+		margin-right: auto;
+		position: relative;
+	}
+	.main-div .left-box {
+		width: 100%;
+		background: #fff;
+		text-align: center;
+	}
+	.main-div .right-box {
+		width: 100%;
+		max-width: 430px;
+		padding: 30px;
+		background: #407aff;
+		margin: auto;
+	}
+}
