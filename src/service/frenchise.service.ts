@@ -15,6 +15,14 @@ export default {
     },
     getFrenchiseData: async function (data:any) {
         return await WebReqUrl.post(Constant.apiUrl + apiUrl.frenchiseController.getFrenchiseList, data);
+    },
+    AddFrenchise: async function (data:any) {
+        return await WebReqUrl.post(Constant.apiUrl + apiUrl.frenchiseController.addFrenchise,data);
+    },
+    getFrenchiseById: async function (data:any) {
+        return await WebReqUrl.get(Constant.apiUrl + apiUrl.frenchiseController.getFrenchiseById + data.id);
+    },
+    updateFrenchise: async function (data:any,id:any) {
+        return await WebReqUrl.put(Constant.apiUrl + apiUrl.frenchiseController.updateFrenchiseById + id,data);
     }
-    
 }

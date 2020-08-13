@@ -7,8 +7,8 @@ export default {
       icon: 'fa fa-desktop fs-16'
     },
     {
-      id:'user management',
-      name: 'User-Management',
+      id:'user',
+      name: 'User',
       icon: 'fa fa-user fs-16',
       children: [
         {
@@ -26,8 +26,8 @@ export default {
       ]
     },
     {
-      id:'Category management',
-      name: 'Category Management',
+      id:'Category',
+      name: 'Category',
       icon: 'fa fa-list fs-16',
       children: [
         {
@@ -42,7 +42,7 @@ export default {
     },
     {
       id:'area',
-      name: 'Area Management',
+      name: 'Area',
       icon: 'fa fa-area-chart fs-16',
       children: [
         {
@@ -52,8 +52,8 @@ export default {
       ]
     },
     {
-      id:'Shop management',
-      name: 'Shop Management',
+      id:'Shop',
+      name: 'Shop',
       icon: 'fa fa-shopping-cart fs-16',
       children: [
         {
@@ -67,8 +67,8 @@ export default {
       ]
     },
     {
-      id:'Product management',
-      name: 'Product Management',
+      id:'Product',
+      name: 'Product',
       icon: 'fa fa-list-alt fs-16',
       children: [
         {
@@ -78,8 +78,8 @@ export default {
       ]
     },
     {
-      id:'Delivery Boy management',
-      name: 'Delivery Boy Management',
+      id:'Delivery Boy',
+      name: 'Delivery Boy',
       icon: 'fa fa-truck fs-16',
       children: [
         {
@@ -93,8 +93,8 @@ export default {
       ]
     },
     {
-      id:'Order management',
-      name: 'Order Management',
+      id:'Order',
+      name: 'Order',
       icon: 'fa fa-list fs-16',
       children: [
         {
@@ -104,8 +104,8 @@ export default {
       ]
     },
     {
-      id:'Frenchise management',
-      name: 'Frenchise Management',
+      id:'Frenchise',
+      name: 'Frenchise',
       icon: 'fa fa-shopping-basket fs-16',
       children: [
         {
@@ -115,8 +115,8 @@ export default {
       ]
     },
     {
-      id:'Payment management',
-      name: 'Payment Management',
+      id:'Payment',
+      name: 'Payment',
       icon: 'fa fa-money fs-16',
       children: [
         {
@@ -130,8 +130,8 @@ export default {
       ]
     },
     {
-      id:'Rating management',
-      name: 'Rating Management',
+      id:'Rating',
+      name: 'Rating',
       icon: 'fa fa-star fs-16',
       children: [
         {

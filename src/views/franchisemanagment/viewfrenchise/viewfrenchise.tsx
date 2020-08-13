@@ -12,15 +12,18 @@ import {
     Label,
     Row,
 } from 'reactstrap';
-// import './adduser.css';
-// import NavBar from '../../navbar/navbar';
-// import API from '../../../service/service';
-// import Switch from "react-switch";
 import constant from '../../../constant/constant';
 import Admin from '../../../layouts/Admin';
 import utils from '../../../helper/utils/utils';
+import { FrenchiseAPI } from '../../../service/index.service';
 
-class ViewFrenchise extends React.Component<{ history: any }> {
+class ViewFrenchise extends React.Component<{ history: any, location: any }> {
+
+    state = {
+        address: '',
+        status: '',
+        servicearea:''
+    }
 
     constructor(props: any) {
         super(props);
@@ -28,8 +31,37 @@ class ViewFrenchise extends React.Component<{ history: any }> {
 
     async componentDidMount() {
         document.title = constant.viewFrenchise + utils.getAppName();
-        // const getProfile = await API.getProfile();
-        // console.log("getprofile",getProfile);
+        const FrenchiseId = this.props.location.pathname.split("/")[2];
+        if (FrenchiseId !== undefined) {
+            this.getFrenchiseById(FrenchiseId);
+        }
+    }
+
+    async getFrenchiseById(id: any) {
+        const obj = {
+            id: id
+        };
+        const getFrenchiseById: any = await FrenchiseAPI.getFrenchiseById(obj);
+        console.log("getFrenchiseById", getFrenchiseById);
+        try {
+            if (getFrenchiseById) {
+                if (getFrenchiseById.statusCode === 200) {
+                    this.setState({
+                        address: this.state.address = getFrenchiseById.data.address,
+                        status: this.state.status = getFrenchiseById.data.verificationRequestStatus,
+                        servicearea: this.state.servicearea =  getFrenchiseById.data.serviceArea.name
+                    });
+                } else {
+                    const msg1 = getFrenchiseById.messageCode;
+                    utils.showError(msg1);
+                }
+            } else {
+                const msg1 = "Internal server error";
+                utils.showError(msg1);
+            }
+        } catch (err) {
+            console.log("err", err);
+        }
     }
 
 
@@ -45,9 +77,11 @@ class ViewFrenchise extends React.Component<{ history: any }> {
                                     <CardHeader>
                                         <Row>
                                             <Col xs="12" sm="6" md="9" lg="9" xl="9">
-                                                <h1 className="main_color">View Frenchise Details</h1>
+                                                <h1 className="main_color">
+                                                    {constant.frenchisePage.viewFrenchisedetails.detail}
+                                                </h1>
                                             </Col>
-                                            <Col xs="12" sm="6" md="3" lg="3" xl="3" style={{ textAlign: "right" }}>
+                                            <Col xs="12" sm="6" md="3" lg="3" xl="3" className="search_right">
                                                 <Link to="/frenchise">
                                                     <Button
                                                         type="button"
@@ -55,8 +89,8 @@ class ViewFrenchise extends React.Component<{ history: any }> {
                                                         color="primary"
                                                         className="mb-2 mr-2 custom-button"
                                                     >
-                                                        Back
-                                        </Button>
+                                                        {constant.button.back}
+                                                    </Button>
                                                 </Link>
                                             </Col>
                                         </Row>
@@ -66,32 +100,26 @@ class ViewFrenchise extends React.Component<{ history: any }> {
                                         <Row>
                                             <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                 <FormGroup>
-                                                    <Label htmlFor="email"><b>Service Area</b></Label>
-                                                    <p>Abc</p>
+                                                    <Label htmlFor="email"><b>{constant.frenchisePage.frenchiseTableColumn.address}</b></Label>
+                                                    <p>{this.state.address}</p>
                                                 </FormGroup>
                                             </Col>
                                             <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                 <FormGroup>
-                                                    <Label htmlFor="mobile_no"><b>Address</b></Label>
-                                                    <p>digital vichar technology</p>
+                                                    <Label htmlFor="mobile_no"><b>{constant.frenchisePage.frenchiseTableColumn.verificationstatus}</b></Label>
+                                                    <p>{this.state.status}</p>
                                                 </FormGroup>
                                             </Col>
                                         </Row>
                                         <Row>
                                             <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                 <FormGroup>
-                                                    <Label htmlFor="email"><b>User</b></Label>
-                                                    <p>User-1</p>
+                                                    <Label htmlFor="email"><b>{constant.frenchisePage.frenchiseTableColumn.servicearea}</b></Label>
+                                                    <p>{this.state.servicearea}</p>
                                                 </FormGroup>
                                             </Col>
-                                            <Col xs="12" sm="12" md="6" lg="6" xl="6">
-                                                <FormGroup>
-                                                    <Label htmlFor="mobile_no"><b>Status</b></Label>
-                                                    <p>REQUEST_SENT</p>
-                                                </FormGroup>
-                                            </Col>
+                                          
                                         </Row>
-                                       
                                     </CardBody>
                                 </Card>
                             </Col>

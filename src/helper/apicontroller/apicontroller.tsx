@@ -32,8 +32,11 @@ const apiUrl = {
         getServiceArea:'common/area/list',
         statusChange:'admin/customer/status',
         getCustomerById:'admin/customer/',
-        getFrenchiseList:'admin/franchise/list'
-    }
+        getFrenchiseList:'admin/franchise/list',
+        addFrenchise:'admin/franchise/create',
+        getFrenchiseById:'admin/franchise/',
+        updateFrenchiseById:'admin/franchise/'
+    },
 }
 
 export default apiUrl;

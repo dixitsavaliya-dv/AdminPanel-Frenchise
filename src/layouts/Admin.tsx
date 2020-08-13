@@ -391,7 +391,7 @@ class Admin extends React.Component {
           <div className="sidenav__brand">
             <i className="fa fa-shopping-basket sidenav__brand-icon" />
             <Link className="sidenav__brand-link" to="/dashboard">
-              Frenchise
+             Admin
             </Link>
             <i
               className="fas fa-times sidenav__brand-close"

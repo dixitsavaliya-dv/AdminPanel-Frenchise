@@ -205,6 +205,9 @@ frenchisePage:{
         serviceareaerror:'',
         updateTrue:false,
         area:[],
+        userid:0,
+        frenchiseid:0,
+        serviceareaname:'',
 
 
         count: "10",
@@ -227,10 +230,11 @@ frenchisePage:{
         selectuser:'Select User',
         selectarea:'Select Service Area',
         address:'Address',
-        verificationstatus:'Verification Status'
+        verificationstatus:'Verification Status',
+        servicearea:'Service Area'
     },
-    viewuserdetails:{
-        detail:'View User Details'
+    viewFrenchisedetails:{
+        detail:'View Frenchise Details'
     }
-}
+},
 }

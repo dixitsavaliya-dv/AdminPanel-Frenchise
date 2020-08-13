@@ -26,7 +26,7 @@ import Admin from '../../../layouts/Admin';
 import API from '../../../service/user.service';
 import { FrenchiseAPI } from '../../../service/index.service';
 
-class ChangePassword extends Component {
+class AddFrenchise extends React.Component<{ history: any, location: any }> {
     frenchiseState = constant.frenchisePage.state
     state = {
         selectuser: this.frenchiseState.selectuser,
@@ -36,7 +36,10 @@ class ChangePassword extends Component {
         servicearea: this.frenchiseState.servicearea,
         serviceareaerror: this.frenchiseState.serviceareaerror,
         updateTrue: this.frenchiseState.updateTrue,
-        area: this.frenchiseState.area
+        area: this.frenchiseState.area,
+        userid: this.frenchiseState.userid,
+        frenchiseid: this.frenchiseState.frenchiseid,
+        serviceareaname:this.frenchiseState.serviceareaname
     }
 
     constructor(props: any) {
@@ -51,8 +54,46 @@ class ChangePassword extends Component {
 
     async componentDidMount() {
         document.title = constant.frenchisePage.title.addfrenchise + utils.getAppName();
+        const users: any = localStorage.getItem('user');
+        let user = JSON.parse(users);
+        if (user) {
+            this.setState({
+                userid: this.state.userid = user.userId
+            })
+        }
         this.getServiceArea();
+        const FrenchiseId = this.props.location.pathname.split("/")[2];
+        if (FrenchiseId !== undefined) {
+            this.getFrenchiseById(FrenchiseId);
+        }
+    }
 
+    async getFrenchiseById(id: any) {
+        const obj = {
+            id: id
+        };
+        const getFrenchiseById: any = await FrenchiseAPI.getFrenchiseById(obj);
+        console.log("getFrenchiseById", getFrenchiseById);
+        try {
+            if (getFrenchiseById) {
+                if (getFrenchiseById.statusCode === 200) {
+                    this.setState({
+                        address: this.state.address = getFrenchiseById.data.address,
+                        serviceareaname: this.state.serviceareaname = getFrenchiseById.data.serviceArea.name,
+                        frenchiseid: this.state.frenchiseid = getFrenchiseById.data._id,
+                        servicearea: this.state.servicearea = getFrenchiseById.data.serviceArea._id
+                    });
+                } else {
+                    const msg1 = getFrenchiseById.messageCode;
+                    utils.showError(msg1);
+                }
+            } else {
+                const msg1 = "Internal server error";
+                utils.showError(msg1);
+            }
+        } catch (err) {
+            console.log("err", err);
+        }
     }
 
     async getServiceArea() {
@@ -87,13 +128,8 @@ class ChangePassword extends Component {
     }
 
     validate() {
-        let selectusererror = "";
         let addresserror = "";
         let serviceareaerror = "";
-
-        if (!this.state.selectuser) {
-            selectusererror = "please select user"
-        }
 
         if (!this.state.address) {
             addresserror = "please enter address"
@@ -103,8 +139,8 @@ class ChangePassword extends Component {
             serviceareaerror = "please select service area"
         }
 
-        if (selectusererror || addresserror || serviceareaerror) {
-            this.setState({ selectusererror, addresserror, serviceareaerror });
+        if (addresserror || serviceareaerror) {
+            this.setState({ addresserror, serviceareaerror });
             return false;
         }
         return true;
@@ -121,7 +157,7 @@ class ChangePassword extends Component {
     onAreaSelect(event: any) {
         this.setState({
             servicearea: this.state.servicearea =
-                event.target.options[event.target.selectedIndex].value,
+                event.target.value
         });
     }
 
@@ -130,27 +166,28 @@ class ChangePassword extends Component {
         const isValid = this.validate();
         if (isValid) {
             this.setState({
-                selectusererror: '',
                 addresserror: '',
                 serviceareaerror: ''
             })
-            if (this.state.selectuser && this.state.servicearea && this.state.address) {
+            if (this.state.userid && this.state.servicearea && this.state.address) {
                 const obj = {
-                    serviceArea: this.state.serviceareaerror,
+                    serviceArea: this.state.servicearea,
                     address: this.state.address,
-                    _user: this.state.selectuser
-
+                    _user: this.state.userid
                 }
-                const updatePassword = await API.updatePassword(obj);
-                console.log("updatePassword", updatePassword);
 
-                // if (updatePassword.statusCode === 200) {
-                //     const msg = updatePassword.messageCode;
-                //     utils.showSuccess(msg);
-                // } else {
-                //     const msg1 = updatePassword.messageCode;
-                //     utils.showError(msg1);
-                // }
+                console.log("obj", obj);
+
+                const AddFrenchise = await FrenchiseAPI.AddFrenchise(obj);
+                console.log("AddFrenchise", AddFrenchise);
+
+                if (AddFrenchise.statusCode === 200) {
+                    const msg = AddFrenchise.messageCode;
+                    utils.showSuccess(msg);
+                } else {
+                    const msg1 = AddFrenchise.messageCode;
+                    utils.showError(msg1);
+                }
 
             } else {
                 const msg1 = "Error";
@@ -163,27 +200,27 @@ class ChangePassword extends Component {
         const isValid = this.validate();
         if (isValid) {
             this.setState({
-                selectusererror: '',
                 addresserror: '',
                 serviceareaerror: ''
             })
-            if (this.state.selectuser && this.state.servicearea && this.state.address) {
+            if (this.state.servicearea && this.state.address) {
                 const obj = {
-                    serviceArea: this.state.serviceareaerror,
+                    serviceArea: this.state.servicearea,
                     address: this.state.address,
-                    _user: this.state.selectuser
-
+                    _user: this.state.userid
                 }
-                const updatePassword = await API.updatePassword(obj);
-                console.log("updatePassword", updatePassword);
 
-                // if (updatePassword.statusCode === 200) {
-                //     const msg = updatePassword.messageCode;
-                //     utils.showSuccess(msg);
-                // } else {
-                //     const msg1 = updatePassword.messageCode;
-                //     utils.showError(msg1);
-                // }
+                console.log("obj", obj);
+                const updateFrenchise = await FrenchiseAPI.updateFrenchise(obj, this.state.frenchiseid);
+                console.log("updateFrenchise", updateFrenchise);
+
+                if (updateFrenchise.statusCode === 200) {
+                    const msg = updateFrenchise.messageCode;
+                    utils.showSuccess(msg);
+                } else {
+                    const msg1 = updateFrenchise.messageCode;
+                    utils.showError(msg1);
+                }
 
             } else {
                 const msg1 = "Error";
@@ -237,42 +274,6 @@ class ChangePassword extends Component {
                             <CardBody>
                                 <Row>
                                     <Col xs="12" sm="12" md="6" lg="6" xl="6">
-                                        <Form>
-                                            <FormGroup>
-                                                <Label for="exampleCustomSelect">
-                                                    {constant.frenchisePage.frenchiseTableColumn.selectuser}
-                                                </Label>
-                                                <CustomInput
-                                                    type="select"
-                                                    id="exampleCustomSelect"
-                                                    name="customSelect"
-                                                    onChange={this.onItemSelect}
-                                                >
-                                                    <option value="">
-                                                        {constant.frenchisePage.frenchiseTableColumn.selectuser}
-                                                    </option>
-                                                    {/* {this.state.categorylist.length > 0
-                                                    ? this.state.categorylist.map(
-                                                        (data: any, index: any) => (
-                                                            <option
-                                                                key={data.id}
-                                                                value={data.value}
-                                                            >
-                                                                {data.name}
-                                                            </option>
-                                                        )
-                                                    )
-                                                    : ""} */}
-                                                </CustomInput>
-                                                <div className="mb-4 text-danger">
-                                                    {this.state.selectusererror}
-                                                </div>
-                                            </FormGroup>
-                                        </Form>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                         <FormGroup>
                                             <Label htmlFor="category_name">{constant.frenchisePage.frenchiseTableColumn.address}</Label>
                                             <Input
@@ -304,21 +305,46 @@ class ChangePassword extends Component {
                                                     name="areaselect"
                                                     onChange={this.onAreaSelect}
                                                 >
-                                                    <option value="">
-                                                        {constant.frenchisePage.frenchiseTableColumn.selectarea}
-                                                    </option>
-                                                    {this.state.area.length > 0
-                                                        ? this.state.area.map(
-                                                            (data: any, index: number) => (
-                                                                <option
-                                                                    key={index}
-                                                                    value={data._id}
-                                                                >
-                                                                    {data.name}
+                                                    {
+                                                        this.state.updateTrue === true ? (
+                                                            <>
+                                                                <option value={this.state.servicearea}>
+                                                                    {this.state.serviceareaname}
                                                                 </option>
+                                                                {this.state.area.length > 0
+                                                                    ? this.state.area.map(
+                                                                        (data: any, index: number) => (
+                                                                            <option
+                                                                                key={index}
+                                                                                value={data._id}
+                                                                            >
+                                                                                {data.name}
+                                                                            </option>
+                                                                        )
+                                                                    )
+                                                                    : ""}
+                                                            </>
+                                                        ) : (
+                                                                <>
+                                                                    <option value="">
+                                                                        {constant.frenchisePage.frenchiseTableColumn.selectarea}
+                                                                    </option>
+                                                                    {this.state.area.length > 0
+                                                                        ? this.state.area.map(
+                                                                            (data: any, index: number) => (
+                                                                                <option
+                                                                                    key={index}
+                                                                                    value={data._id}
+                                                                                >
+                                                                                    {data.name}
+                                                                                </option>
+                                                                            )
+                                                                        )
+                                                                        : ""}
+                                                                </>
                                                             )
-                                                        )
-                                                        : ""}
+                                                    }
+
                                                 </CustomInput>
                                                 <div className="mb-4 text-danger">
                                                     {this.state.serviceareaerror}
@@ -357,4 +383,4 @@ class ChangePassword extends Component {
     }
 }
 
-export default ChangePassword;
+export default AddFrenchise;

@@ -40,6 +40,7 @@ class Frenchise extends React.Component<{ history: any }> {
     this.btnIncrementClick = this.btnIncrementClick.bind(this);
     this.btnDecrementClick = this.btnDecrementClick.bind(this);
     this.getFrenchiseData = this.getFrenchiseData.bind(this);
+    this.editFrenchise = this.editFrenchise.bind(this);
     this.viewFrenchise = this.viewFrenchise.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.searchApplicationDataKeyUp = this.searchApplicationDataKeyUp.bind(
@@ -115,9 +116,13 @@ class Frenchise extends React.Component<{ history: any }> {
     this.setState({ currentPage: listid });
   }
 
+  editFrenchise(id:any) {
+    this.props.history.push('/add-frenchise/' + id);
+  }
+
 
   viewFrenchise(id: any) {
-    this.props.history.push('/view-delivery-boy/' + id);
+    this.props.history.push('/view-frenchise/' + id);
   }
 
   onItemSelect(event: any) {
@@ -309,6 +314,10 @@ class Frenchise extends React.Component<{ history: any }> {
                       <i
                         className="fa fa-eye"
                         onClick={() => this.viewFrenchise(data._id)}
+                      ></i>
+                       <i
+                        className="fas fa-edit"
+                        onClick={() => this.editFrenchise(data._id)}
                       ></i>
                     </span>
                   </td>
